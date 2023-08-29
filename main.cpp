@@ -5,7 +5,7 @@ int main()
 	bool ret = false;
 
 	// Step 1: 读取数据
-	string filename = "E:/others/运筹优化/庄若晨/Pulse_Python/instances/c101.txt";
+	string filename = "c101.txt";
 	Data data;
 	ret = data.ReadData(filename);
 	if (!ret){

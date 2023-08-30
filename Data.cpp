@@ -25,7 +25,8 @@ bool Data::ReadData(string filename, int maxCustNum)
 	int customerLine = 10;
 	int currLine = 0;
 	int vehicleNum = 0, capacity = 0;
-	int custNo, posX, posY, demand, readyTime, dueTime, servTime;
+	int custNo, demand, readyTime, dueTime, servTime;
+	float_t posX, posY;
 
 	while (getline(infile, line))
 	{
@@ -70,7 +71,7 @@ bool Data::ReadData(string filename, int maxCustNum)
 			}
 			else
 			{
-				float_t tmpdis = CalEuclidDis(customers[i].posX, customers[i].posY, customers[j].posX, customers[j].posY);
+				float_t tmpdis = (float_t)CalEuclidDis(customers[i].posX, customers[i].posY, customers[j].posX, customers[j].posY);
 				disM[i][j] = disM[j][i] = tmpdis;
 			}
 		}

@@ -2,7 +2,7 @@
 
 class Customer {
 public:
-	Customer(int custNo, int posX, int posY, int demand, int readyTime, int dueTime, int servTime) :
+	Customer(int custNo, float_t posX, float_t posY, int demand, int readyTime, int dueTime, int servTime) :
 		custNo(custNo),
 		posX(posX),
 		posY(posY),
@@ -12,8 +12,8 @@ public:
 		servTime(servTime) {};
 
 	int custNo;
-	int posX;
-	int posY;
+	float_t posX;
+	float_t posY;
 	int demand;
 	int readyTime;
 	int dueTime;

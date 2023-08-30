@@ -1,4 +1,6 @@
 #include "Label.h"
+#include<stdio.h>
+#include<windows.h>
 
 void LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 {
@@ -8,10 +10,18 @@ void LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 	label.path.push_back(org);
 	Queue.push_back(label);
 
+	LARGE_INTEGER nFreq;
+	LARGE_INTEGER t1;
+	LARGE_INTEGER t2;
+	double dt;
+	QueryPerformanceFrequency(&nFreq);
+	QueryPerformanceCounter(&t1);
+
 	map<int, Label> Paths;
 	int cnt = 0;
 	while (Queue.size() > 0)
 	{
+		db_print(DB_NORMAL, "Queue: %d\n", Queue.size());
 		cnt += 1;
 
 		Label curLabel = Queue[0];
@@ -46,6 +56,10 @@ void LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 
 		dominate(Queue, Paths);
 	}
+
+	QueryPerformanceCounter(&t2);
+	dt = (t2.QuadPart - t1.QuadPart) / (double)nFreq.QuadPart;
+	cout << "Running time1:" << dt * 1000 << "ms" << endl;
 
 	map<int, Label> PathsCopy(Paths);
 	for (auto ul = PathsCopy.begin(); ul != PathsCopy.end(); ++ul)
@@ -89,8 +103,7 @@ void LabellingAlg::dominate(vector<Label>& Queue, map<int, Label>& Paths)
 	{
 		for (int i = 0; i < Queue.size(); ++i)
 		{
-			Label anotherLabel = Queue[i];
-			if (label.path[label.path.size() - 1] == anotherLabel.path[anotherLabel.path.size() - 1] && label.time < anotherLabel.time && label.dis < anotherLabel.dis)
+			if (label.path[label.path.size() - 1] == Queue[i].path[Queue[i].path.size() - 1] && label.time < Queue[i].time && label.dis < Queue[i].dis)
 			{
 				delIndexs.push_back(i);
 			}

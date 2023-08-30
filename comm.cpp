@@ -30,7 +30,7 @@ int db_print(int level, const char* format, ...)
 
 	printf("%s""[%04d/%02d/%02d %02d:%02d:%02d]""%s",
 		color, p.tm_year + 1900, p.tm_mon + 1, p.tm_mday,
-		(8 + p.tm_hour) % 24, p.tm_min, p.tm_sec, COLOR_OFF);
+		(p.tm_hour) % 24, p.tm_min, p.tm_sec, COLOR_OFF);
 	va_start(args, format);
 	vprintf(format, args);
 	va_end(args);

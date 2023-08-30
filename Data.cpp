@@ -58,6 +58,7 @@ bool Data::ReadData(string filename, int maxCustNum)
 	if (customers.size() <= 0 or vehicleNum <= 0 or capacity <= 0)
 		return false;
 
+	// 将客户0作为起点和终点，因此在末尾添加客户0，并将客户编号改为客户数量
 	Customer tmpCus(customers[0]);
 	tmpCus.custNo = customers.size();
 	addCustomer(tmpCus);

@@ -30,6 +30,9 @@
     <ClInclude Include="Graph.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Data.cpp">
@@ -42,6 +45,9 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="Graph.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

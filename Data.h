@@ -10,14 +10,13 @@ private:
 	void setCapicity(int capi);
 
 public:
-	int custNum;
 	int vehicleNum;
 	int capicity;
 	vector<Customer> customers;
 	vector<vector<float_t>> disMat;
 
 	Data() {
-		custNum = 0; vehicleNum = 0; capicity = 0;
+		vehicleNum = 0; capicity = 0;
 	};
 	
 	// ¶ÁÈ¡Êý¾Ý

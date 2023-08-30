@@ -3,7 +3,6 @@
 void Data::addCustomer(Customer cust)
 {
 	customers.push_back(cust);
-	custNum += 1;
 }
 
 void Data::setVehicleNum(int vehi)
@@ -33,7 +32,7 @@ bool Data::ReadData(string filename, int maxCustNum)
 		currLine += 1;
 
 		// 读取指定数量的客户
-		if (currLine >= customerLine + maxCustNum)
+		if (currLine > customerLine + maxCustNum)
 			break;
 
 		istringstream iss(line);
@@ -56,14 +55,18 @@ bool Data::ReadData(string filename, int maxCustNum)
 		}
 	}
 
-	if (custNum <= 0 or vehicleNum <= 0 or capacity <= 0)
+	if (customers.size() <= 0 or vehicleNum <= 0 or capacity <= 0)
 		return false;
 
+	Customer tmpCus(customers[0]);
+	tmpCus.custNo = customers.size();
+	addCustomer(tmpCus);
+
 	// 计算距离矩阵
-	vector<vector<float_t>> disM(custNum, vector<float_t>(custNum));
-	for (int i = 0; i < custNum; ++i)
+	vector<vector<float_t>> disM(customers.size(), vector<float_t>(customers.size()));
+	for (int i = 0; i < customers.size(); ++i)
 	{
-		for (int j = i; j < custNum; ++j)
+		for (int j = i; j < customers.size(); ++j)
 		{
 			if (i == j)
 			{

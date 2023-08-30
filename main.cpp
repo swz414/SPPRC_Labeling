@@ -1,19 +1,20 @@
 #include "Data.h"
 #include "Graph.h"
+#include "Label.h"
 
 int main()
 {
 	bool ret = false;
 
 	// Step 1: 读取数据
-	string filename = "c101.txt";
+	string filename = "C1_6_1.txt";
 	Data data;
 	ret = data.ReadData(filename);
 	if (!ret){
 		db_print(DB_ERROR, "读取数据失败！\n");
 		return 0;
 	}
-	db_print(DB_NORMAL, "vehicleNum: %d, capicity: %d, custNum: %d\n", data.vehicleNum, data.capicity, data.custNum);
+	db_print(DB_NORMAL, "vehicleNum: %d, capicity: %d, custNum: %d\n", data.vehicleNum, data.capicity, data.customers.size());
 
 	// Step 2: 构建网络图
 	Graph graph;
@@ -27,11 +28,11 @@ int main()
 	db_print(DB_NORMAL, "nodelen: %d, %d, %f, %f\n", graph.getNodes().size(), graph.getNode(0).index, graph.getNode(0).corX, graph.getNode(0).corY);
 
 	// 添加边
-	for (int i = 0; i < data.customers.size() - 1; ++i)
+	for (int i = 0; i < data.customers.size(); ++i)
 	{
-		for (int j = 1; j < data.customers.size(); ++j)
+		for (int j = 0; j < data.customers.size(); ++j)
 		{
-			if (i == j || (i == 0 && j == data.customers.size() - 1))
+			if (i == j || (i == 0 && j == data.customers.size() - 1) || (j == 0 && i == data.customers.size() - 1))
 				continue;
 			graph.addEdge(i, j, data.disMat[i][j], data.disMat[i][j]);
 		}
@@ -40,4 +41,7 @@ int main()
 	db_print(DB_NORMAL, "the number of successors for 0: %d\n", graph.getSuccessors(0).size());
 	db_print(DB_NORMAL, "the number of previous for 0: %d\n", graph.getPrevious(0).size());
 
+	// Step 3: 标签算法解SPPRC
+	LabellingAlg labellingAlg;
+	labellingAlg.labelling_SPPRC(graph, 0, graph.getNodes().size() - 1);
 }

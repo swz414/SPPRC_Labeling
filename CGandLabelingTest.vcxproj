@@ -132,11 +132,13 @@
     <ClInclude Include="comm.h" />
     <ClInclude Include="Graph.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="Label.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Data.cpp" />
     <ClCompile Include="comm.cpp" />
     <ClCompile Include="Graph.cpp" />
+    <ClCompile Include="Label.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -7,9 +7,7 @@ void Graph::addNode(int index, float_t corX, float_t corY, int demand, int ready
 
 void Graph::addEdge(int from, int to, float_t length, float_t travelTime)
 {
-	vector<Edge> tmpEdges = edges[from];
-	tmpEdges.push_back(Edge{ from, to, length, travelTime });
-	edges[from] = tmpEdges;
+	edges[from][to] = Edge{ from, to, length, travelTime };
 
 	previous[to].insert(from);
 	successors[from].insert(to);
@@ -31,26 +29,34 @@ vector<Node> Graph::getNodes()
 
 Edge Graph::getEdge(int from, int to)
 {
-	for (auto iter = edges[from].begin(); iter != edges[from].end(); ++iter)
-	{
-		if ((*iter).to == to)
-		{
-			return *iter;
-		}
-	}
-	return Edge{ 0, 0, 0, 0 };
+	return edges[from][to];
 }
 
 vector<Edge> Graph::getEdges(int from)
 {
-	return edges[from];
+	vector<Edge> rstVec;
+	transform(
+		edges[from].begin(),
+		edges[from].end(),
+		std::back_inserter(rstVec), // 需要使用back_inserter，它会自动为vector分配空间
+		[](auto& kv) { return kv.second; }
+	);
+
+	return rstVec;
 }
 
 vector<Edge> Graph::getAllEdges()
 {
 	vector<Edge> retVec;
 	for (const auto& edge : edges) {
-		retVec.insert(retVec.end(), edge.second.begin(), edge.second.end());
+		vector<Edge> tmp;
+		transform(
+			edge.second.begin(),
+			edge.second.end(),
+			std::back_inserter(tmp), // 需要使用back_inserter，它会自动为vector分配空间
+			[](auto& kv) { return kv.second; }
+		);
+		retVec.insert(retVec.end(), tmp.begin(), tmp.end());
 	}
 	return retVec;
 }

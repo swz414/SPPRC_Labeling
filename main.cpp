@@ -7,7 +7,8 @@ int main()
 	bool ret = false;
 
 	// Step 1: ¶ÁÈ¡Êý¾Ý
-	string filename = "C1_6_1.txt";
+	string filename = "c101.txt";
+	//string filename = "C1_6_1.txt";
 	Data data;
 	ret = data.ReadData(filename);
 	if (!ret){

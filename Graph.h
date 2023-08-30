@@ -25,7 +25,7 @@ struct Edge
 
 class Graph {
     map<int, Node> nodes;
-    map<int, vector<Edge>> edges;
+    map<int, map<int, Edge>> edges;
 
     map<int, set<int>> previous;
     map<int, set<int>> successors;

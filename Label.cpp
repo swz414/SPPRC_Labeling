@@ -35,7 +35,7 @@ Label LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 			float_t readyTime = curNode->readyTime;
 			float_t dueTime = curNode->dueTime;
 
-			if (lastNode != des && cnt == count(extendedPath.path.begin(), extendedPath.path.end(), child)
+			if (lastNode != des && 0 == count(extendedPath.path.begin(), extendedPath.path.end(), child)
 				&& arriveTime >= readyTime && arriveTime <= dueTime)
 			{
 				extendedPath.path.push_back(child);

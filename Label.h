@@ -17,6 +17,6 @@ public:
 
 class LabellingAlg {
 public:
-	void labelling_SPPRC(Graph graph, int org, int des);
+	Label labelling_SPPRC(Graph graph, int org, int des);
 	void dominate(vector<Label>& Queue, map<int, Label>& Paths);
 };

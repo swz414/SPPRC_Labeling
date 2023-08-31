@@ -13,50 +13,48 @@ void Graph::addEdge(int from, int to, float_t length, float_t travelTime)
 	successors[from].insert(to);
 }
 
-Node Graph::getNode(int index)
+Node* Graph::getNode(int index)
 {
-	return nodes[index];
+	return &nodes[index];
 }
 
-vector<Node> Graph::getNodes()
+vector<Node*> Graph::getNodes()
 {
-	vector<Node> retVec;
-	for (const auto& node : nodes) {
-		retVec.emplace_back(node.second);
-	}
-	return retVec;
+	vector<Node*> rstVec;
+	transform(
+		nodes.begin(),
+		nodes.end(),
+		std::back_inserter(rstVec), // 需要使用back_inserter，它会自动为vector分配空间
+		[](auto& kv) { return &(kv.second); }
+	);
+	return rstVec;
 }
 
-Edge Graph::getEdge(int from, int to)
+Edge* Graph::getEdge(int from, int to)
 {
-	return edges[from][to];
+	return &edges[from][to];
 }
 
-vector<Edge> Graph::getEdges(int from)
+vector<Edge*> Graph::getEdges(int from)
 {
-	vector<Edge> rstVec;
+	vector<Edge*> rstVec;
 	transform(
 		edges[from].begin(),
 		edges[from].end(),
 		std::back_inserter(rstVec), // 需要使用back_inserter，它会自动为vector分配空间
-		[](auto& kv) { return kv.second; }
+		[](auto& kv) { return &(kv.second); }
 	);
 
 	return rstVec;
 }
 
-vector<Edge> Graph::getAllEdges()
+vector<Edge*> Graph::getAllEdges()
 {
-	vector<Edge> retVec;
-	for (const auto& edge : edges) {
-		vector<Edge> tmp;
-		transform(
-			edge.second.begin(),
-			edge.second.end(),
-			std::back_inserter(tmp), // 需要使用back_inserter，它会自动为vector分配空间
-			[](auto& kv) { return kv.second; }
-		);
-		retVec.insert(retVec.end(), tmp.begin(), tmp.end());
+	vector<Edge*> retVec, tmpVec;
+	for (const auto &kv : edges)
+	{
+		tmpVec = getEdges(kv.first);
+		retVec.assign(tmpVec.begin(), tmpVec.end());
 	}
 	return retVec;
 }

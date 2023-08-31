@@ -38,4 +38,18 @@ int db_print(int level, const char* format, ...)
 	return 0;
 }
 
+/*
+*	// 测接口执行时间
+	LARGE_INTEGER nFreq;
+	LARGE_INTEGER t1;
+	LARGE_INTEGER t2;
+	double dt;
+	QueryPerformanceFrequency(&nFreq);
+	QueryPerformanceCounter(&t1);
+	{code seg}
+	QueryPerformanceCounter(&t2);
+	dt = (t2.QuadPart - t1.QuadPart) / (double)nFreq.QuadPart;
+	cout << "Running time4:" << dt * 1000 << "ms" << endl;
+*/
+
 #endif

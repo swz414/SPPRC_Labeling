@@ -1,6 +1,6 @@
 #include "Graph.h"
 
-void Graph::addNode(int index, float_t corX, float_t corY, int demand, int readyTime, int dueTime, int serviceTime)
+void Graph::addNode(int index, float_t corX, float_t corY, int demand, float_t readyTime, float_t dueTime, float_t serviceTime)
 {
 	nodes.emplace(index, Node{ index, corX, corY, demand, readyTime, dueTime, serviceTime});
 }

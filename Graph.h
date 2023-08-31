@@ -8,9 +8,9 @@ struct Node
     float_t corX;
     float_t corY;
     int demand;
-    int readyTime;
-    int dueTime;
-    int serviceTime;
+    float_t readyTime;
+    float_t dueTime;
+    float_t serviceTime;
 } typedef Node;
 
 // ±ß½á¹¹Ìå
@@ -31,7 +31,7 @@ class Graph {
     map<int, set<int>> successors;
 
 public:
-    void addNode(int index, float_t corX, float_t corY, int demand, int readyTime, int dueTime, int serviceTime);
+    void addNode(int index, float_t corX, float_t corY, int demand, float_t readyTime, float_t dueTime, float_t serviceTime);
     void addEdge(int from, int to, float_t length, float_t travelTime);
 
     Node* getNode(int index);

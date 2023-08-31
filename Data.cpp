@@ -24,8 +24,8 @@ bool Data::ReadData(string filename, int maxCustNum)
 	int customerLine = 10;
 	int currLine = 0;
 	int vehicleNum = 0, capacity = 0;
-	int custNo, demand, readyTime, dueTime, servTime;
-	float_t posX, posY;
+	int custNo, demand;
+	float_t posX, posY, readyTime, dueTime, servTime;
 
 	while (getline(infile, line))
 	{

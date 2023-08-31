@@ -21,9 +21,9 @@ Label LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 
 		Queue.erase(Queue.begin());
 
-		int lastNode = curLabel.path[curLabel.path.size() - 1];
+		int lastNode = curLabel.path.back();
 
-		for (int child : graph.getSuccessors(lastNode))
+		for (int &child : graph.getSuccessors(lastNode))
 		{
 			Label extendedPath = curLabel;
 			int arcFrom = lastNode;
@@ -32,11 +32,11 @@ Label LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 			Edge* curEdge = graph.getEdge(arcFrom, arcTo);
 			Node* curNode = graph.getNode(child);
 			float_t arriveTime = curLabel.time + curEdge->travelTime;
-			int readyTime = curNode->readyTime;
-			int dueTime = curNode->dueTime;
+			float_t readyTime = curNode->readyTime;
+			float_t dueTime = curNode->dueTime;
 
-			if (count(extendedPath.path.begin(), extendedPath.path.end(), child) == 0 &&
-				arriveTime >= readyTime && arriveTime <= dueTime)
+			if (lastNode != des && cnt == count(extendedPath.path.begin(), extendedPath.path.end(), child)
+				&& arriveTime >= readyTime && arriveTime <= dueTime)
 			{
 				extendedPath.path.push_back(child);
 				extendedPath.dis += curEdge->length;
@@ -52,9 +52,10 @@ Label LabellingAlg::labelling_SPPRC(Graph graph, int org, int des)
 	}
 
 	map<int, Label> PathsCopy(Paths);
-	for (auto ul: PathsCopy)
+	for (auto &ul: PathsCopy)
 	{
 		int key = ul.first;
+
 		if (ul.second.path.back() != des)
 		{
 			Paths.erase(key);
@@ -84,11 +85,12 @@ void LabellingAlg::dominate(vector<Label>& Queue, map<int, Label>& Paths)
 	map<int, Label> PathsCopy(Paths);
 
 	vector<int> delIndexs;
-	for (Label label : QueueCopy)
+	delIndexs.clear();
+	for (Label &label : QueueCopy)
 	{
 		for (int i = 0; i < Queue.size(); ++i)
 		{
-			if (label.path[label.path.size() - 1] == Queue[i].path[Queue[i].path.size() - 1] && label.time < Queue[i].time && label.dis < Queue[i].dis)
+			if (label.path.back() == Queue[i].path.back() && label.time < Queue[i].time && label.dis < Queue[i].dis && count(delIndexs.begin(), delIndexs.end(), i) == 0)
 			{
 				delIndexs.push_back(i);
 			}
@@ -96,9 +98,12 @@ void LabellingAlg::dominate(vector<Label>& Queue, map<int, Label>& Paths)
 	}
 	sort(delIndexs.rbegin(), delIndexs.rend());
 
-	for (int index : delIndexs)
+	for (int &index : delIndexs)
 	{
-		Queue.erase(Queue.begin() + index);
+		if (index < Queue.size())
+			Queue.erase(Queue.begin() + index);
+		else
+			db_print(DB_ERROR, "ÏÂ±ê´íÎó£¡index: %d, Size: %d\n", index, Queue.size());
 	}
 
 	for (auto &ul1: PathsCopy)
